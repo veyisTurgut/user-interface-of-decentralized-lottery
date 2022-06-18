@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/web3@1.2.9/dist/web3.min.js"></script> -->
+    <script src="./index.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Smart Lottery</title>
+</head>
+
+<body>
+    <header>
+        <h1 class="display-3">&nbsp Welcome to the Lottery</h1>
+        <h4 class="display-5">&nbsp &nbsp&nbsp&nbsp Trust your "GUT" feeling</h1>
+    </header>
+    <br/>
+    <br/>
+    <!-- Functions -->
+    <h3>&nbsp&nbspMain functionalities</h3>
+    <div class="row">
+        <!-- deposit +-->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="depositTL()">Deposit
+          TL</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="deposit_amount" rows="1" cols="40" placeholder="amount"></textarea>
+                        <p id="deposit_result" class="card-text"> </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- withdraw +-->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="withdrawTL()">Withdraw
+          TL</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="withdraw_amount" rows="1" cols="40" placeholder="amount"></textarea>
+                        <p id="withdraw_result" class="card-text"> </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- buy ticket +-->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="buyTicket()">Buy
+          Ticket</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="hashed_num" rows="3" cols="40" placeholder="hashed random number"></textarea>
+                        <p id="purchase_result" class="card-text"> </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- collect refund +-->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="collect_refund()">Collect
+          Ticket Refund</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="refund_ticket_no" rows="1" cols="40" placeholder="ticket no"></textarea>
+                        <p id="collect_refund_result" class="card-text"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- reveal rand +-->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="reveal()">Reveal Random
+          Number</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="reveal_ticket_no" style="overflow:hidden" rows="1" cols="40" placeholder="ticket no"></textarea>
+                        <br />
+                        <textarea id="reveal_random_no" style="overflow:hidden" rows="1" cols="40" placeholder="random no"></textarea>
+                        <p id="reveal_result" class="card-text"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--get last owned ticket no -->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="getLastTicket()">Get
+          Last Owned Ticket No</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="lastOwned_lottery_no" rows="1" cols="40" placeholder="lottery no"></textarea>
+                        <p id="get_last_owned_ticket_no_result" class="card-text"></p>
+                        <p id="get_last_owned_ticket_status_result" class="card-text"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- get I'th owned ticket no +-->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="getIthBought()">Get
+          I'th Owned Ticket No</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="owned_i" rows="1" cols="40" placeholder="i"></textarea>
+                        <br />
+                        <textarea id="ith_owned_lottery_no" rows="1" cols="40" placeholder="lottery no"></textarea>
+                        <p id="get_ith_owned_ticket_no_result" class="card-text"></p>
+                        <p id="get_ith_owned_ticket_status_result" class="card-text"></p>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- check if ticket won +-->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="checkIfWon()">Check If
+          Ticket Won</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="won_ticket_no" rows="1" cols="40" placeholder="ticket no"></textarea>
+                        <p id="check_if_ticket_won_result" class="card-text"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- collct prize +-->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="collect_prize()">Collect
+          Ticket Prize</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="prize_ticket_no" rows="1" cols="40" placeholder="ticket no"></textarea>
+                        <p id="collect_prize_result" class="card-text"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <!-- get I'th winning ticket +-->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="getIthWinner()">Get
+          I'th Winning Ticket</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="ith_winner" rows="1" cols="40" placeholder="i"></textarea>
+                        <br />
+                        <textarea id="getIth_lottery_no" rows="1" cols="40" placeholder="lottery no"></textarea>
+                        <p id="getIth_result" class="card-text"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- get lottery no +-->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="getLotteryNo()">Get
+          Lottery No</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="unix_time_in_week" rows="1" cols="40" placeholder="unix time in week"></textarea>
+                        <p id="current_lottery_result" class="card-text"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- get total lottery money collected +-->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-primary" onclick="getTotalMoneyCollected()">Get
+          Total Lottery Money Collected</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="get_total_lottery_money_lottery_no" rows="1" cols="40" placeholder="lottery no"></textarea>
+                        <p id="get_total_lottery_money_result" class="card-text"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Helpers -->
+    <h3>&nbsp&nbspHelper buttons</h3>
+    <div class="row">
+        <!-- get TL balance -->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-secondary" onclick="getTLBalance()">Get TL
+          Balance</a></p>
+            <div class="card-body">
+                <p id="balance_result" class="card-text"></p>
+            </div>
+        </div>
+        <!-- create TL -->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-secondary" onclick="giveMoney()">Mint TL</a>
+            </p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="mint_tl_amount" rows="1" cols="20" placeholder="amount"></textarea>
+                        <p id="mintTL_result" class="card-text"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- allow lottery contract to spend TL -->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-secondary" onclick="approveContract()">Allow
+          Contract To Transfer Money</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="allow_contract" rows="1" cols="20" placeholder="amount"></textarea>
+                        <p id="allow_contract_result" class="card-text"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- take hash of random number -->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-secondary" onclick="hashRandomNumber()">Hash
+      Random Number</a></p>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <textarea id="hash_random_no" rows="1" cols="20" placeholder="random_no"></textarea>
+                        <p id="hash_random_no_result" class="card-text"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- get current unix time in week -->
+        <div class="col-sm">
+            <p class="card-header"><a href='javascript:void();' class="btn btn-secondary" onclick="getUnixTimeInWeek()">Get current unix time in week</a></p>
+            <div class="card-body">
+                <p id="unix_time_in_week_response" class="card-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+{
+    "name": "blockchain-ui-veyis-muhammed-erencan",
+    "version": "1.0.0",
+    "description": "User interface of the decentralized blockchain system",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "keywords": [
+        "blockchain",
+        "smart contracts",
+        "ethereum",
+        "rsk",
+        "web3"
+    ],
+    "author": "Veyis Turgut <vturgut68@gmail.com>",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.18.1",
+        "web3": "^1.2.6"
+    },
+    "devDependencies": {}
+}
